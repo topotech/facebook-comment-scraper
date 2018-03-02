@@ -1,0 +1,80 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 14px;
+}
+
+a {
+  color: inherit;
+}
+
+fieldset {
+  border: 0;
+  padding: 0;
+
+  div {
+    &:not(:first-child) {
+      margin-top: 1em;
+    }
+  }
+}
+
+label {
+  display: block;
+  margin-bottom: .5em;
+}
+
+input, select {
+  height: 38px;
+  border: 1px solid black;
+  padding: 2px 8px;
+}
+
+input {
+}
+
+code {
+  display: block;
+  margin: 1em 0;
+  padding: 1em;
+  background-color: rgb(225, 225, 225);
+}
+
+table {
+  width: 100%;
+  border: 1px solid gray;
+  border-collapse: collapse;
+
+  td {
+    padding: 8px 8px;
+  }
+
+  thead {
+    font-weight: bold;
+    background-color: rgb(225, 225, 225);
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: rgb(255, 255, 255);
+      }
+
+      &:nth-child(even) {
+        background-color: rgb(235, 235, 235);
+      }
+    }
+  }
+}
+
+#react-container {
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-areas: "header" "main"
+}
