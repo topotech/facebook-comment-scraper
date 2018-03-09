@@ -7,11 +7,31 @@ import adapter from 'redux-localstorage/lib/adapters/localStorage';
 
 import rootReducer from './reducers';
 
+const isFetchObject = statePiece => Object.keys(statePiece).every(key => typeof statePiece[key] === 'object' && 'isFetching' in statePiece[key]);
+
+const filterOutUnsafe = statePiece =>
+  Object.keys(statePiece).reduce((newObject, currentKey) => {
+    const currentPiece = statePiece[currentKey];
+
+    if (currentPiece.error || currentPiece.isLoading) {
+      return newObject;
+    }
+
+    return {
+      ...newObject,
+      [currentKey]: currentPiece,
+    };
+  }, {});
+
 const reducer = compose(
   mergePersistedState((initialState, persistedState) => {
     const mergedState = {};
     Object.keys(initialState).forEach((key) => {
-      mergedState[key] = initialState[key].merge(persistedState[key]);
+      const mergeObject = persistedState[key];
+      const safeMergeObject = isFetchObject(mergeObject) ?
+        filterOutUnsafe(mergeObject) :
+        mergeObject;
+      mergedState[key] = initialState[key].merge(safeMergeObject);
     });
     return mergedState;
   }),
