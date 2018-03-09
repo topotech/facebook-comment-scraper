@@ -10,6 +10,7 @@ const fields = [
   'id',
   'permalink_url',
   'message',
+  'likes.limit(0).summary(true)',
   'comments.limit(0).summary(true)',
   /*
   'link',
@@ -17,7 +18,6 @@ const fields = [
   'type',
   'name',
   'shares',
-  'likes.limit(0).summary(true)',
   'reactions.limit(0).summary(true)',
   */
 ];
