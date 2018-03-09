@@ -11,10 +11,15 @@ export default class PageDataDisplay extends Component {
     request: PropTypes.instanceOf(Map),
   }
 
+  onClickFetch = () => {
+    const { pageUri } = this.props;
+    this.props.fetchData({ pageUri });
+  }
+
   renderFetchButton() {
     return (
       <React.Fragment>
-        <button onClick={() => this.props.fetchData({ pageUri: this.props.pageUri })}>
+        <button onClick={this.onClickFetch}>
           Fetch data for {this.props.pageUri}
         </button>
       </React.Fragment>
@@ -30,7 +35,7 @@ export default class PageDataDisplay extends Component {
         <p>
           <code>{request.get('error')}</code>
         </p>
-        <button onClick={() => this.props.fetchData({ pageUri })}>
+        <button onClick={this.onClickFetch}>
           Retry
         </button>
       </React.Fragment>
@@ -38,11 +43,11 @@ export default class PageDataDisplay extends Component {
   }
 
   renderContent() {
-    const { pageUri, request } = this.props;
+    const { request } = this.props;
 
     return (
       <React.Fragment>
-        <button onClick={() => this.props.fetchData({ pageUri })}>
+        <button onClick={this.onClickFetch}>
           Refresh data
         </button>
         <Table data={request.get('data')}>

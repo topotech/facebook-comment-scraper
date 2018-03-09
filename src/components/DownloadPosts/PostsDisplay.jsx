@@ -15,12 +15,17 @@ export default class PostsDisplay extends Component {
     request: PropTypes.instanceOf(Map),
   }
 
+  onClickFetch = () => {
+    const { pageId } = this.props;
+    this.props.fetchData({ pageId });
+  }
+
   renderFetchButton() {
-    const { page, pageId } = this.props;
+    const { page } = this.props;
 
     return (
       <React.Fragment>
-        <button onClick={() => this.props.fetchData({ pageId })}>
+        <button onClick={this.onClickFetch}>
           Fetch posts for {page.get('name')}
         </button>
       </React.Fragment>

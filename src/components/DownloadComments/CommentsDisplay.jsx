@@ -14,12 +14,17 @@ export default class CommentsDisplay extends Component {
     request: PropTypes.instanceOf(Map),
   }
 
+  onClickFetch = () => {
+    const { postId } = this.props;
+    this.props.fetchData({ postId });
+  }
+
   renderFetchButton() {
     const { postId } = this.props;
 
     return (
       <React.Fragment>
-        <button onClick={() => this.props.fetchData({ postId })}>
+        <button onClick={this.onClickFetch}>
           Fetch comments for {postId}
         </button>
       </React.Fragment>
@@ -40,7 +45,7 @@ export default class CommentsDisplay extends Component {
             <code>{error.message || 'Unknown error'}</code>
           </p>
         )}
-        <button onClick={() => this.props.fetchData({ postId })}>
+        <button onClick={this.onClickFetch}>
           Retry
         </button>
       </React.Fragment>
@@ -48,11 +53,11 @@ export default class CommentsDisplay extends Component {
   }
 
   renderContent() {
-    const { postId, request } = this.props;
+    const { request } = this.props;
 
     return (
       <React.Fragment>
-        <button onClick={() => this.props.fetchData({ postId })}>
+        <button onClick={this.onClickFetch}>
           Refresh data
         </button>
         <Table
