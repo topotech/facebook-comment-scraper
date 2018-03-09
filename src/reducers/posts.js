@@ -5,6 +5,7 @@ import {
   POSTS_SUCCESS,
   POSTS_FAILURE,
 } from '../actions/posts';
+import { objectToQueryString } from '../utils/url';
 
 export default createFetchReducer({
   actions: [
@@ -12,5 +13,8 @@ export default createFetchReducer({
     POSTS_SUCCESS,
     POSTS_FAILURE,
   ],
-  key: (state, action) => [action.options.pageId],
+  key: (state, action) => {
+    const { pageId, ...otherOptions } = action.options;
+    return [pageId, objectToQueryString(otherOptions)];
+  },
 });
