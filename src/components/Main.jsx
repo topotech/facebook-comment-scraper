@@ -19,6 +19,7 @@ export default class Main extends Component {
           <Route exact path="/download-page-data/:pageUri" component={DownloadPageData} />
           <Route exact path="/download-posts" component={DownloadPosts} />
           <Route exact path="/download-posts/:pageId" component={DownloadPosts} />
+          <Route exact path="/download-comments" component={DownloadComments} />
           <Route exact path="/download-comments/:postId" component={DownloadComments} />
           <Route exact path="/settings" component={Settings} />
         </Switch>
