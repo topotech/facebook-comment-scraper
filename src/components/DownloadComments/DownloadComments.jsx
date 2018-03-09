@@ -40,7 +40,7 @@ class DownloadComments extends Component {
           <h2>Download comments</h2>
           <fieldset>
             <div>
-              <label htmlFor="postId">Post</label>
+              <label htmlFor="postId">Post ID or comment ID</label>
               <input type="text" id="pageUri" value={postId || ''} onChange={this.onChange} />
             </div>
           </fieldset>
