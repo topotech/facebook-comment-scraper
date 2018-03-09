@@ -2,7 +2,7 @@
   "name": "facebook-comment-scraper",
   "version": "0.0.1-alpha",
   "description": "Facebook comment scraper and analyzer.",
-  "main": "index.js",
+  "main": "index.html",
   "author": {
     "name": "Wojciech Maj",
     "email": "kontakt@wojtekmaj.pl"
