@@ -7,7 +7,7 @@ import adapter from 'redux-localstorage/lib/adapters/localStorage';
 
 import rootReducer from './reducers';
 
-const isFetchObject = statePiece => Object.keys(statePiece).every(key => typeof statePiece[key] === 'object' && 'isFetching' in statePiece[key]);
+const isFetchObject = statePiece => statePiece && Object.keys(statePiece).every(key => typeof statePiece[key] === 'object' && 'isFetching' in statePiece[key]);
 
 const filterOutUnsafe = statePiece =>
   Object.keys(statePiece).reduce((newObject, currentKey) => {
