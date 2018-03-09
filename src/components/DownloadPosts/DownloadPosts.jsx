@@ -10,6 +10,7 @@ import { pushLastPiece, replaceLastPiece } from '../../utils/url';
 class DownloadPosts extends Component {
   static propTypes = {
     history: PropTypes.shape({
+      push: PropTypes.func.isRequired,
       replace: PropTypes.func.isRequired,
     }).isRequired,
     location: PropTypes.shape({
@@ -26,10 +27,17 @@ class DownloadPosts extends Component {
   onChange = (event) => {
     const { pageId } = this.props.match.params;
 
+    const { value } = event.target;
+
+    if (value === '__OTHER__') {
+      this.props.history.push('/download-page-data');
+      return;
+    }
+
     this.props.history.replace(
       (pageId ?
         replaceLastPiece :
-        pushLastPiece)(this.props.location.pathname, event.target.value),
+        pushLastPiece)(this.props.location.pathname, value),
     );
   }
 
@@ -51,6 +59,7 @@ class DownloadPosts extends Component {
                     {page.get('name')}
                   </option>
                 ))}
+                <option value="__OTHER__">other...</option>
               </select>
             </div>
           </fieldset>
