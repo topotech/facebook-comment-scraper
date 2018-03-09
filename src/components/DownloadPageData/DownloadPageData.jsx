@@ -24,10 +24,21 @@ class DownloadPageData extends Component {
   onChange = (event) => {
     const { pageUri } = this.props.match.params;
 
+    let { value } = event.target;
+
+    if (
+      value.startsWith('http://www.facebook.com/') ||
+      value.startsWith('https://www.facebook.com/') ||
+      value.startsWith('http://m.facebook.com/') ||
+      value.startsWith('https://m.facebook.com/')
+    ) {
+      value = value.split('/').pop();
+    }
+
     this.props.history.replace(
       (pageUri ?
         replaceLastPiece :
-        pushLastPiece)(this.props.location.pathname, event.target.value),
+        pushLastPiece)(this.props.location.pathname, value),
     );
   }
 
@@ -41,7 +52,12 @@ class DownloadPageData extends Component {
           <fieldset>
             <div>
               <label htmlFor="pageUri">Page Uri</label>
-              <input type="text" id="pageUri" value={pageUri || ''} onChange={this.onChange} />
+              <input
+                type="text"
+                id="pageUri"
+                value={pageUri || ''}
+                onChange={this.onChange}
+              />
             </div>
           </fieldset>
         </section>
