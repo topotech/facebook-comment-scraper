@@ -1,5 +1,6 @@
 @import (reference) './colors.less';
 @import (reference) './variables.less';
+@import './icons.less';
 
 *, *:before, *:after {
   box-sizing: border-box;
@@ -97,6 +98,10 @@ button {
   &:hover {
     background: @facebook-light-gray;
   }
+
+  .material-icons {
+    vertical-align: -27%;
+  }
 }
 
 button.main {
@@ -175,12 +180,17 @@ table {
 }
 
 #react-container {
-  width: 100vw;
   height: 100vh;
   display: grid;
   grid-template-rows: auto auto 1fr;
   grid-template-columns: 180px 1fr;
   grid-template-areas: "warning warning" "header header" "menu main";
+
+  @media screen and (max-width: 800px) {
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-columns: 1fr;
+    grid-template-areas: "warning" "header" "menu" "main";
+  }
 }
 
 .react-date-picker {

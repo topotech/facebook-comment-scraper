@@ -5,6 +5,7 @@ import { Map } from 'immutable';
 import Table, { Column } from '../_common/Table';
 import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
+import RefreshButton from '../_common/RefreshButton';
 
 export default class PageDataDisplay extends Component {
   static propTypes = {
@@ -52,9 +53,7 @@ export default class PageDataDisplay extends Component {
     return (
       <React.Fragment>
         <div className="table-toolbar">
-          <button onClick={this.onClickFetch}>
-            Refresh data
-          </button>
+          <RefreshButton onClick={this.onClickFetch} />
           <DownloadAs
             data={data}
             filename={`pagedata_${pageUri}`}

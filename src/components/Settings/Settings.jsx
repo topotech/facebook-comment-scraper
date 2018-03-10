@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import Icon from '../_common/Icon';
+
 import { decode, encode } from '../../utils/base64';
 import { download } from '../../utils/file';
 
@@ -83,15 +85,23 @@ export default class Settings extends Component {
           </div>
 
           <div>
-            <label htmlFor="import">Export data</label>
-            <button onClick={this.onClickExport}>
+            <label htmlFor="export">Export data</label>
+            <button
+              id="export"
+              onClick={this.onClickExport}
+            >
+              <Icon>file_upload</Icon>
               Export data
             </button>
           </div>
 
           <div>
             <label htmlFor="import">Import data</label>
-            <input type="file" onChange={this.onSelectFile} />
+            <input
+              type="file"
+              id="import"
+              onChange={this.onSelectFile}
+            />
           </div>
         </fieldset>
       </section>

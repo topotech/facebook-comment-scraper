@@ -9,6 +9,7 @@ import LinkCell from '../_common/LinkCell';
 import TextCell from '../_common/TextCell';
 import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
+import RefreshButton from '../_common/RefreshButton';
 
 import { queryStringToObject } from '../../utils/url';
 
@@ -66,9 +67,7 @@ export default class PostsDisplay extends Component {
     return (
       <React.Fragment>
         <div className="table-toolbar">
-          <button onClick={this.onClickFetch}>
-            Refresh data
-          </button>
+          <RefreshButton onClick={this.onClickFetch} />
           <DownloadAs
             data={data}
             filename={`posts_${pageId}`}

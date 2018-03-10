@@ -5,7 +5,12 @@ nav {
   grid-area: menu;
   margin: @margin 0 0 @margin;
 
+  @media screen and (max-width: 800px) {
+    margin-right: @margin;
+  }
+
   ul {
+    max-width: 180px;
     display: flex;
     flex-direction: column;
     list-style: none;
@@ -16,7 +21,7 @@ nav {
     line-height: 22px;
 
     li {
-      height: 28px;
+      min-height: 28px;
       margin: 0 0 -1px 0;
 
       a {
