@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { Map } from 'immutable';
 
 import Table, { Column } from '../_common/Table';
+import TextCell from '../_common/TextCell';
 import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
 import RefreshButton from '../_common/RefreshButton';
@@ -60,8 +62,27 @@ export default class PageDataDisplay extends Component {
           />
         </div>
         <Table data={data}>
-          <Column dataKey="id" />
+          <Column
+            dataKey="id"
+            cell={({ row }) => (
+              <TextCell>
+                <Link to={`https://www.facebook.com/${row.id}`}>
+                  {row.id}
+                </Link>
+              </TextCell>
+            )}
+          />
           <Column dataKey="name" />
+          <Column
+            dataKey="posts"
+            cell={({ row }) => (
+              <TextCell>
+                <Link to={`/download-posts/${row.id}`}>
+                  Download posts
+                </Link>
+              </TextCell>
+            )}
+          />
         </Table>
       </React.Fragment>
     );
