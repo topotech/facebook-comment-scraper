@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
 
@@ -8,7 +8,7 @@ import RefreshButton from '../_common/RefreshButton';
 
 import CommentsTable from '../_tables/CommentsTable';
 
-export default class CommentsDisplay extends Component {
+export default class CommentsDisplay extends PureComponent {
   static propTypes = {
     fetchData: PropTypes.func.isRequired,
     postId: PropTypes.string,

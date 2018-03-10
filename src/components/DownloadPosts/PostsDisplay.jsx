@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,7 @@ import RefreshButton from '../_common/RefreshButton';
 
 import { queryStringToObject } from '../../utils/url';
 
-export default class PostsDisplay extends Component {
+export default class PostsDisplay extends PureComponent {
   static propTypes = {
     fetchData: PropTypes.func.isRequired,
     location: PropTypes.shape({

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 import DatePicker from 'react-date-picker';
@@ -8,7 +8,7 @@ import PostsDisplay from '../../containers/DownloadPosts/PostsDisplay';
 
 import { pushLastPiece, replaceLastPiece, objectToQueryString, queryStringToObject } from '../../utils/url';
 
-class DownloadPosts extends Component {
+class DownloadPosts extends PureComponent {
   static propTypes = {
     history: PropTypes.shape({
       push: PropTypes.func.isRequired,

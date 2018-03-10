@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import CommentsDisplay from '../../containers/DownloadComments/CommentsDisplay';
 
 import { pushLastPiece, replaceLastPiece } from '../../utils/url';
 
-export default class DownloadComments extends Component {
+export default class DownloadComments extends PureComponent {
   static propTypes = {
     history: PropTypes.shape({
       replace: PropTypes.func.isRequired,

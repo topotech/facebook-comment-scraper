@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import './Menu.less';
 
 import Icon from './_common/Icon';
 
-export default class Menu extends Component {
+export default class Menu extends PureComponent {
   links = [
     {
       to: '/',

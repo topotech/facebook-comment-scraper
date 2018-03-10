@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
 
@@ -9,7 +9,7 @@ import './Table.less';
 
 export const Column = () => null;
 
-export default class Table extends Component {
+export default class Table extends PureComponent {
   static propTypes = {
     data: PropTypes.oneOfType([
       PropTypes.object,

@@ -1,6 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+const { format } = Intl.DateTimeFormat('en-GB', {
+  day: 'numeric',
+  month: 'short',
+  year: 'numeric',
+  hour: 'numeric',
+  minute: 'numeric',
+});
+
 const toDate = (value) => {
   const date = new Date(value);
 
@@ -8,13 +16,7 @@ const toDate = (value) => {
     return value;
   }
 
-  return Intl.DateTimeFormat('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-  }).format(date);
+  return format(date);
 };
 
 const DateCell = ({ children }) => (

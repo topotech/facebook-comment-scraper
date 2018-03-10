@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import TextCell from './TextCell';
@@ -13,7 +13,7 @@ export const renderCellContent = (cell, cellProps) => {
   return cell;
 };
 
-export default class Row extends Component {
+export default class Row extends PureComponent {
   static propTypes = {
     row: PropTypes.shape({}).isRequired,
     children: PropTypes.node.isRequired,

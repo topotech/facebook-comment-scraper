@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
 
@@ -7,7 +7,7 @@ import './DownloadAs.less';
 import { download } from '../../utils/file';
 import jsonToCSV from '../../utils/csv';
 
-export default class DownloadAs extends Component {
+export default class DownloadAs extends PureComponent {
   static propTypes = {
     data: PropTypes.oneOfType([
       PropTypes.object,

@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import './NetworkListener.less';
 
-export default class NetworkListener extends Component {
+export default class NetworkListener extends PureComponent {
   static propTypes = {
     isOnline: PropTypes.bool.isRequired,
     online: PropTypes.func.isRequired,

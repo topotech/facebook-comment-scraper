@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
-export default class HeaderRow extends Component {
+export default class HeaderRow extends PureComponent {
   static propTypes = {
     children: PropTypes.node.isRequired,
   }

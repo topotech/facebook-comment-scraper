@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import Icon from '../_common/Icon';
@@ -15,7 +15,7 @@ const write = (data) => {
   }
 };
 
-export default class Settings extends Component {
+export default class Settings extends PureComponent {
   static propTypes = {
     apiId: PropTypes.string.isRequired,
     apiKey: PropTypes.string.isRequired,

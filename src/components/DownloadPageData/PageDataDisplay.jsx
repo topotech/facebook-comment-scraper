@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { List, Map } from 'immutable';
@@ -9,7 +9,7 @@ import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
 import RefreshButton from '../_common/RefreshButton';
 
-export default class PageDataDisplay extends Component {
+export default class PageDataDisplay extends PureComponent {
   static propTypes = {
     fetchData: PropTypes.func.isRequired,
     pageUri: PropTypes.string,

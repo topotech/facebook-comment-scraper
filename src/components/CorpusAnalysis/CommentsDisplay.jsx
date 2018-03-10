@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { List } from 'immutable';
 
@@ -7,7 +7,7 @@ import CommentsTable from '../_tables/CommentsTable';
 
 import { queryStringToObject } from '../../utils/url';
 
-export default class CommentsDisplay extends Component {
+export default class CommentsDisplay extends PureComponent {
   static propTypes = {
     location: PropTypes.shape({
       search: PropTypes.string,

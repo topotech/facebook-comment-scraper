@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 
 import CommentsDisplay from '../../containers/CorpusAnalysis/CommentsDisplay';
 
 import { objectToQueryString, queryStringToObject } from '../../utils/url';
 
-export default class CorpusAnalysis extends Component {
+export default class CorpusAnalysis extends PureComponent {
   static propTypes = {
     history: PropTypes.shape({
       replace: PropTypes.func.isRequired,

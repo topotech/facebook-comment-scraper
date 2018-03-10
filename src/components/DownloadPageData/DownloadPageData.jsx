@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router';
 
@@ -6,7 +6,7 @@ import PageDataDisplay from '../../containers/DownloadPageData/PageDataDisplay';
 
 import { pushLastPiece, replaceLastPiece } from '../../utils/url';
 
-class DownloadPageData extends Component {
+class DownloadPageData extends PureComponent {
   static propTypes = {
     history: PropTypes.shape({
       replace: PropTypes.func.isRequired,
