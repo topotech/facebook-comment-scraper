@@ -100,7 +100,11 @@ export default class CommentsDisplay extends Component {
 
     let content;
     if (!request) {
-      content = this.renderFetchButton();
+      if (!postId) {
+        content = 'Type in post ID or comment ID';
+      } else {
+        content = this.renderFetchButton();
+      }
     } else if (request.get('data') === false) {
       content = this.renderRetryButton();
     } else if (request.get('data') === null) {

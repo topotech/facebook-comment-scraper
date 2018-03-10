@@ -93,6 +93,7 @@ export default class Settings extends Component {
           </div>
 
           <div>
+            <label htmlFor="import">Export data</label>
             <button onClick={this.onClickExport}>
               Export data
             </button>

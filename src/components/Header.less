@@ -1,11 +1,15 @@
+@import (reference) './colors.less';
+@import (reference) './variables.less';
+
 header {
   grid-area: header;
-  background-color: rgb(0, 99, 190);
+  background-color: @facebook-blue;
+  border-bottom: 1px solid @facebook-dark-blue;
   color: white;
 
   h1 {
     display: block;
-    margin: .5em;
-    font-weight: 400;
+    margin: @margin;
+    font-weight: bold;
   }
 }
