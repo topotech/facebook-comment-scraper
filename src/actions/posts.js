@@ -2,19 +2,22 @@ import createFetchAction from './_fetchAction';
 
 import config from '../config';
 
+import { objectToQueryString } from '../utils/url';
+import { toFacebookFormat } from '../utils/api';
+
 export const POSTS_REQUEST = 'POSTS_REQUEST';
 export const POSTS_SUCCESS = 'POSTS_SUCCESS';
 export const POSTS_FAILURE = 'POSTS_FAILURE';
 
 const fields = [
   'id',
+  'created_time',
   'permalink_url',
   'message',
   'likes.limit(0).summary(true)',
   'comments.limit(0).summary(true)',
   /*
   'link',
-  'created_time',
   'type',
   'name',
   'shares',
@@ -22,11 +25,22 @@ const fields = [
   */
 ];
 
+const limit = 100;
+
 export default createFetchAction({
   actions: [
     POSTS_REQUEST,
     POSTS_SUCCESS,
     POSTS_FAILURE,
   ],
-  url: (state, args) => `${config.apiUrl}${args.pageId}/posts/?fields=${fields.join(',')}&limit=100`,
+  url: (state, args) => {
+    const {
+      pageId, ...otherArgs
+    } = args;
+    return `${config.apiUrl}${pageId}/posts/?${objectToQueryString({
+      fields,
+      limit,
+      ...toFacebookFormat(otherArgs),
+    })}`;
+  },
 });

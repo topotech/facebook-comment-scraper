@@ -4,12 +4,18 @@ import { Map } from 'immutable';
 import { Link } from 'react-router-dom';
 
 import Table, { Column } from '../_common/Table';
-import TextCell from '../_common/TextCell';
+import DateCell from '../_common/DateCell';
 import LinkCell from '../_common/LinkCell';
+import TextCell from '../_common/TextCell';
+
+import { queryStringToObject } from '../../utils/url';
 
 export default class PostsDisplay extends Component {
   static propTypes = {
     fetchData: PropTypes.func.isRequired,
+    location: PropTypes.shape({
+      search: PropTypes.string,
+    }).isRequired,
     pageId: PropTypes.string,
     page: PropTypes.instanceOf(Map),
     request: PropTypes.instanceOf(Map),
@@ -17,7 +23,9 @@ export default class PostsDisplay extends Component {
 
   onClickFetch = () => {
     const { pageId } = this.props;
-    this.props.fetchData({ pageId });
+    const search = queryStringToObject(this.props.location.search);
+
+    this.props.fetchData({ pageId, ...search });
   }
 
   renderFetchButton() {
@@ -33,7 +41,7 @@ export default class PostsDisplay extends Component {
   }
 
   renderRetryButton() {
-    const { page, pageId, request } = this.props;
+    const { page, request } = this.props;
 
     return (
       <React.Fragment>
@@ -41,7 +49,7 @@ export default class PostsDisplay extends Component {
         <p>
           <code>{request.get('error')}</code>
         </p>
-        <button onClick={() => this.props.fetchData({ pageId })}>
+        <button onClick={this.onClickFetch}>
           Retry
         </button>
       </React.Fragment>
@@ -49,11 +57,11 @@ export default class PostsDisplay extends Component {
   }
 
   renderContent() {
-    const { pageId, request } = this.props;
+    const { request } = this.props;
 
     return (
       <React.Fragment>
-        <button onClick={() => this.props.fetchData({ pageId })}>
+        <button onClick={this.onClickFetch}>
           Refresh data
         </button>
         <Table
@@ -65,6 +73,14 @@ export default class PostsDisplay extends Component {
               <LinkCell href={row.permalink_url}>
                 {row.id.split('_')[1]}
               </LinkCell>
+            )}
+          />
+          <Column
+            dataKey="created_time"
+            cell={({ children }) => (
+              <DateCell>
+                {children}
+              </DateCell>
             )}
           />
           <Column dataKey="message" />

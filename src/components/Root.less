@@ -16,7 +16,7 @@ fieldset {
   border: 0;
   padding: 0;
 
-  div {
+  & > div {
     &:not(:first-child) {
       margin-top: 1em;
     }
@@ -28,7 +28,8 @@ label {
   margin-bottom: .5em;
 }
 
-input, select {
+input, select, .react-date-picker__button {
+  min-width: 165px;
   height: 38px;
   border: 1px solid black;
   padding: 2px 8px;
@@ -80,4 +81,11 @@ table {
   display: grid;
   grid-template-rows: auto 1fr;
   grid-template-areas: "header" "main";
+}
+
+.react-date-picker {
+  .react-calendar {
+    position: relative;
+    z-index: 1;
+  }
 }

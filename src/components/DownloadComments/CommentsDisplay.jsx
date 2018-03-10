@@ -4,8 +4,9 @@ import { Map } from 'immutable';
 import { Link } from 'react-router-dom';
 
 import Table, { Column } from '../_common/Table';
-import TextCell from '../_common/TextCell';
+import DateCell from '../_common/DateCell';
 import LinkCell from '../_common/LinkCell';
+import TextCell from '../_common/TextCell';
 
 export default class CommentsDisplay extends Component {
   static propTypes = {
@@ -69,6 +70,14 @@ export default class CommentsDisplay extends Component {
               <LinkCell href={row.permalink_url}>
                 {row.id.split('_')[1]}
               </LinkCell>
+            )}
+          />
+          <Column
+            dataKey="created_time"
+            cell={({ children }) => (
+              <DateCell>
+                {children}
+              </DateCell>
             )}
           />
           <Column dataKey="message" />

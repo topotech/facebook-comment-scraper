@@ -3,7 +3,6 @@ import thunk from 'redux-thunk';
 
 import persistState, { mergePersistedState } from 'redux-localstorage';
 import adapter from 'redux-localstorage/lib/adapters/localStorage';
-// import filter from 'redux-localstorage-filter';
 
 import rootReducer from './reducers';
 
