@@ -1,13 +1,16 @@
 import { Map } from 'immutable';
 import { actionTypes } from 'redux-localstorage';
 
-const defaultStatePiece = Map({
+const defaultRequestStatePiece = Map({
   isFetching: false,
   data: null,
   error: null,
 });
 
-const defaultState = Map({});
+const defaultState = Map({
+  requests: Map({}),
+  records: Map({}),
+});
 
 export default ({
   actions,
@@ -23,24 +26,41 @@ export default ({
   }
 
   return (state = defaultState, action) => {
-    const getKeyArray = () => (typeof key === 'function' ? key(state, action) : key);
-    const getStatePiece = () => state.getIn(getKeyArray(), defaultStatePiece);
-    const updateStatePiece = data => state.setIn(getKeyArray(), getStatePiece().merge(data));
-    const parseDataRecords = statePiece => statePiece.map((statePiece2) => {
-      const statePieceData = statePiece2.get('data');
-      if (!statePieceData) {
-        return parseDataRecords(statePiece2);
+    const updateStatePiece = ({ isFetching, data, error }) => {
+      const keyArray = (typeof key === 'function' ? key(state, action) : key);
+      const requestsKeyArray = ['requests', ...keyArray];
+
+      const requests = state.getIn(requestsKeyArray, defaultRequestStatePiece);
+      let records = state.get('records');
+
+      if (!data) {
+        return state
+          .setIn(requestsKeyArray, requests.merge({ isFetching, data, error }));
       }
-      const data = statePieceData.map(row => new Record(row));
-      return statePiece2.set('data', data);
-    });
+
+      const rows = [].concat(data);
+      const recordIds = [];
+
+      rows.forEach((row) => {
+        const record = Record ? new Record(row) : row;
+        records = records.set(record.id, record);
+        recordIds.push(record.id);
+      });
+
+      return state
+        .setIn(requestsKeyArray, requests.merge({ isFetching, data: recordIds, error }))
+        .set('records', records);
+    };
+
+    const makeRecordsFromRawJs = statePiece =>
+      statePiece.set('records', statePiece.get('records', []).map(row => new Record(row)));
 
     switch (action.type) {
       case actionTypes.INIT: {
         if (!Record) {
           return state;
         }
-        return parseDataRecords(state);
+        return makeRecordsFromRawJs(state);
       }
       case actions[0]: { // Request
         return updateStatePiece({
@@ -50,10 +70,9 @@ export default ({
         });
       }
       case actions[1]: { // Success
-        const data = Record ? action.data.map(row => new Record(row)) : action.data;
         return updateStatePiece({
           isFetching: false,
-          data,
+          data: action.data,
           error: null,
         });
       }

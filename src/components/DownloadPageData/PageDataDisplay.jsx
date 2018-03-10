@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 
 import Table, { Column } from '../_common/Table';
 import TextCell from '../_common/TextCell';
@@ -14,6 +14,10 @@ export default class PageDataDisplay extends Component {
     fetchData: PropTypes.func.isRequired,
     pageUri: PropTypes.string,
     request: PropTypes.instanceOf(Map),
+    rows: PropTypes.oneOfType([
+      PropTypes.instanceOf(List),
+      PropTypes.bool,
+    ]),
   }
 
   onClickFetch = () => {
@@ -48,20 +52,18 @@ export default class PageDataDisplay extends Component {
   }
 
   renderContent() {
-    const { pageUri, request } = this.props;
-
-    const data = request.get('data');
+    const { pageUri, rows } = this.props;
 
     return (
       <React.Fragment>
         <div className="table-toolbar">
           <RefreshButton onClick={this.onClickFetch} />
           <DownloadAs
-            data={data}
+            data={rows}
             filename={`pagedata_${pageUri}`}
           />
         </div>
-        <Table data={data}>
+        <Table data={rows}>
           <Column
             dataKey="id"
             cell={({ row }) => (
@@ -89,19 +91,19 @@ export default class PageDataDisplay extends Component {
   }
 
   render() {
-    const { request, pageUri } = this.props;
+    const { pageUri, rows } = this.props;
 
     let content;
-    if (!request) {
+    if (rows === false) {
+      content = this.renderRetryButton();
+    } else if (rows === null) {
+      content = 'Loading';
+    } else if (!rows) {
       if (!pageUri) {
         content = 'Type in page Uri';
       } else {
         content = this.renderFetchButton();
       }
-    } else if (request.get('data') === false) {
-      content = this.renderRetryButton();
-    } else if (request.get('data') === null) {
-      content = 'Loading';
     } else {
       content = this.renderContent();
     }

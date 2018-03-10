@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 import { Link } from 'react-router-dom';
 
 import Table, { Column } from '../_common/Table';
 import DateCell from '../_common/DateCell';
-import LinkCell from '../_common/LinkCell';
 import TextCell from '../_common/TextCell';
 import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
@@ -16,6 +15,10 @@ export default class CommentsDisplay extends Component {
     fetchData: PropTypes.func.isRequired,
     postId: PropTypes.string,
     request: PropTypes.instanceOf(Map),
+    rows: PropTypes.oneOfType([
+      PropTypes.instanceOf(List),
+      PropTypes.bool,
+    ]),
   }
 
   onClickFetch = () => {
@@ -52,26 +55,26 @@ export default class CommentsDisplay extends Component {
   }
 
   renderContent() {
-    const { postId, request } = this.props;
-
-    const data = request.get('data');
+    const { postId, rows } = this.props;
 
     return (
       <React.Fragment>
         <div className="table-toolbar">
           <RefreshButton onClick={this.onClickFetch} />
           <DownloadAs
-            data={data}
+            data={rows}
             filename={`comments_${postId}`}
           />
         </div>
-        <Table data={data}>
+        <Table data={rows}>
           <Column
             dataKey="id"
             cell={({ row }) => (
-              <LinkCell href={row.permalink_url}>
-                {row.shortId}
-              </LinkCell>
+              <TextCell>
+                <Link to={`https://www.facebook.com/${row.id}`}>
+                  {row.shortId}
+                </Link>
+              </TextCell>
             )}
           />
           <Column
@@ -101,19 +104,19 @@ export default class CommentsDisplay extends Component {
   }
 
   render() {
-    const { request, postId } = this.props;
+    const { rows, postId } = this.props;
 
     let content;
-    if (!request) {
+    if (rows === false) {
+      content = this.renderRetryButton();
+    } else if (rows === null) {
+      content = 'Loading';
+    } else if (!rows) {
       if (!postId) {
         content = 'Type in post ID or comment ID';
       } else {
         content = this.renderFetchButton();
       }
-    } else if (request.get('data') === false) {
-      content = this.renderRetryButton();
-    } else if (request.get('data') === null) {
-      content = 'Loading';
     } else {
       content = this.renderContent();
     }

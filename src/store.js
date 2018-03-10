@@ -6,61 +6,63 @@ import adapter from 'redux-localstorage/lib/adapters/localStorage';
 
 import rootReducer from './reducers';
 
-const isFetchObject = statePiece => statePiece && (
-  Object.keys(statePiece).every(key => typeof statePiece[key] === 'object' && (
-    'isFetching' in statePiece[key] ||
-    isFetchObject(statePiece[key])
-  ))
+const isNonObject = item => (
+  !item ||
+  typeof item === 'string' ||
+  typeof item === 'boolean' ||
+  typeof item === 'number' ||
+  Array.isArray(item)
 );
 
-const filterOutUnsafe = statePiece =>
-  Object.keys(statePiece).reduce((newObject, currentKey) => {
-    const currentPiece = statePiece[currentKey];
+const isRequestObject = item => (
+  'error' in item &&
+  'isFetching' in item &&
+  'data' in item
+);
+
+const makeSafeMergeObject = mergeObject =>
+  Object.keys(mergeObject).reduce((safeObject, currentKey) => {
+    const currentValue = mergeObject[currentKey];
 
     if (
-      !currentPiece ||
-      typeof currentPiece === 'string' ||
-      typeof currentPiece === 'boolean' ||
-      typeof currentPiece === 'number' ||
-      Array.isArray(currentPiece)
+      isNonObject(currentValue) ||
+      currentKey === 'records'
     ) {
       return {
-        ...newObject,
-        [currentKey]: currentPiece,
+        ...safeObject,
+        [currentKey]: currentValue,
       };
     }
 
-    if (
-      'error' in currentPiece &&
-      'isFetching' in currentPiece &&
-      'data' in currentPiece
-    ) {
-      if (currentPiece.error || currentPiece.isFetching) {
-        return newObject;
+    if (isRequestObject(currentValue)) {
+      if (currentValue.error || currentValue.isFetching) {
+        return safeObject;
       }
 
       return {
-        ...newObject,
-        [currentKey]: currentPiece,
+        ...safeObject,
+        [currentKey]: currentValue,
       };
     }
 
     return {
-      ...newObject,
-      [currentKey]: filterOutUnsafe(currentPiece),
+      ...safeObject,
+      [currentKey]: makeSafeMergeObject(currentValue),
     };
   }, {});
 
 const reducer = compose(
   mergePersistedState((initialState, persistedState) => {
     const mergedState = {};
-    Object.keys(initialState).forEach((key) => {
-      const mergeObject = persistedState[key];
-      const safeMergeObject = isFetchObject(mergeObject) ?
-        filterOutUnsafe(mergeObject) :
-        mergeObject;
-      mergedState[key] = initialState[key].merge(safeMergeObject);
-    });
+    Object.keys(initialState)
+      .forEach((key) => {
+        const mergeObject = persistedState[key];
+        if (!mergeObject) {
+          return;
+        }
+        const safeMergeObject = makeSafeMergeObject(mergeObject);
+        mergedState[key] = initialState[key].merge(safeMergeObject);
+      });
     return mergedState;
   }),
 )(rootReducer);

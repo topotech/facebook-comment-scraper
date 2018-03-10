@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Map } from 'immutable';
+import { List, Map } from 'immutable';
 import { Link } from 'react-router-dom';
 
 import Table, { Column } from '../_common/Table';
@@ -22,6 +22,10 @@ export default class PostsDisplay extends Component {
     pageId: PropTypes.string,
     page: PropTypes.instanceOf(Map),
     request: PropTypes.instanceOf(Map),
+    rows: PropTypes.oneOfType([
+      PropTypes.instanceOf(List),
+      PropTypes.bool,
+    ]),
   }
 
   onClickFetch = () => {
@@ -60,20 +64,18 @@ export default class PostsDisplay extends Component {
   }
 
   renderContent() {
-    const { pageId, request } = this.props;
-
-    const data = request.get('data');
+    const { pageId, rows } = this.props;
 
     return (
       <React.Fragment>
         <div className="table-toolbar">
           <RefreshButton onClick={this.onClickFetch} />
           <DownloadAs
-            data={data}
+            data={rows}
             filename={`posts_${pageId}`}
           />
         </div>
-        <Table data={data}>
+        <Table data={rows}>
           <Column
             dataKey="id"
             cell={({ row }) => (
@@ -112,19 +114,19 @@ export default class PostsDisplay extends Component {
   }
 
   render() {
-    const { request, page } = this.props;
+    const { page, pageId, rows } = this.props;
 
     let content;
-    if (!request) {
-      if (!page) {
+    if (rows === false) {
+      content = this.renderRetryButton();
+    } else if (rows === null) {
+      content = 'Loading';
+    } else if (!rows) {
+      if (!pageId) {
         content = 'Select page';
       } else {
         content = this.renderFetchButton();
       }
-    } else if (request.get('data') === false) {
-      content = this.renderRetryButton();
-    } else if (request.get('data') === null) {
-      content = 'Loading';
     } else {
       content = this.renderContent();
     }
