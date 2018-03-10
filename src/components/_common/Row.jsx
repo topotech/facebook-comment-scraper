@@ -31,17 +31,19 @@ export default class Row extends PureComponent {
     const value = row[dataKey];
     const finalValue = getter ? getter(value) : value;
 
+    const props = { row, ...otherColumnProps, ...otherRowProps };
+
     if (React.isValidElement(cell)) {
       const Cell = cell;
       return (
-        <Cell {...otherColumnProps}>
+        <Cell {...props}>
           {finalValue}
         </Cell>
       );
     }
 
     if (typeof cell === 'function') {
-      return React.createElement(cell, { row, ...otherColumnProps, ...otherRowProps }, finalValue);
+      return React.createElement(cell, props, finalValue);
     }
 
     return null;

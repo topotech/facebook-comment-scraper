@@ -20,7 +20,7 @@ const toDate = (value) => {
 };
 
 const DateCell = ({ children }) => (
-  <td>
+  <td className="date-cell">
     {toDate(children)}
   </td>
 );

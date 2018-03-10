@@ -12,7 +12,7 @@ const toSafeValue = value => (
 const TextCell = ({ children, search }) => {
   const safeValue = toSafeValue(children);
   return (
-    <td>
+    <td className="text-cell">
       {
         search ?
           <Mark mark={search}>{safeValue}</Mark> :
