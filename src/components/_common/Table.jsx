@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List, Map } from 'immutable';
+import { List, Map, Record } from 'immutable';
 
 import Row from './Row';
 import HeaderRow from './HeaderRow';
@@ -15,16 +15,6 @@ export default class Table extends Component {
     ]).isRequired,
   }
 
-  get dataObject() {
-    const { data } = this.props;
-
-    if (data instanceof Map || data instanceof List) {
-      return data.toJSON();
-    }
-
-    return data;
-  }
-
   renderTableHeader() {
     return (
       <HeaderRow
@@ -33,23 +23,29 @@ export default class Table extends Component {
     );
   }
 
-  renderRow = (row, rowIndex) => (
-    <Row
-      key={row.id || rowIndex}
-      row={row}
-      {...this.props}
-    />
-  );
+  renderRow = (row, rowIndex) => {
+    const rowRecord = row instanceof Map ? row.toJSON() : row;
+    return (
+      <Row
+        key={row.id || rowIndex}
+        row={rowRecord}
+        {...this.props}
+      />
+    );
+  }
 
   renderRows() {
-    const { dataObject } = this;
+    const { data } = this.props;
 
     return (
       <tbody>
         {
-          Array.isArray(dataObject) ?
-            dataObject.map(this.renderRow) :
-            this.renderRow(dataObject)
+          (
+            Array.isArray(data) ||
+            data instanceof List
+          ) ?
+            data.map(this.renderRow) :
+            this.renderRow(data, 0)
         }
       </tbody>
     );

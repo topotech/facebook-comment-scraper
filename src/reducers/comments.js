@@ -1,4 +1,5 @@
 import createFetchReducer from './_fetchReducer';
+import Comment from '../records/Comment';
 
 import {
   COMMENTS_REQUEST,
@@ -13,4 +14,5 @@ export default createFetchReducer({
     COMMENTS_FAILURE,
   ],
   key: (state, action) => [action.options.postId],
+  Record: Comment,
 });

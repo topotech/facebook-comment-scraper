@@ -1,4 +1,5 @@
 import createFetchReducer from './_fetchReducer';
+import Post from '../records/Post';
 
 import {
   POSTS_REQUEST,
@@ -17,4 +18,5 @@ export default createFetchReducer({
     const { pageId, ...otherOptions } = action.options;
     return [pageId, objectToQueryString(otherOptions)];
   },
+  Record: Post,
 });

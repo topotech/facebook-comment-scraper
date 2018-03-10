@@ -78,7 +78,7 @@ export default class PostsDisplay extends Component {
             dataKey="id"
             cell={({ row }) => (
               <LinkCell href={row.permalink_url}>
-                {row.id.split('_')[1]}
+                {row.shortId}
               </LinkCell>
             )}
           />
@@ -92,12 +92,10 @@ export default class PostsDisplay extends Component {
           />
           <Column dataKey="message" />
           <Column
-            dataKey="likes"
-            getter={value => value && value.summary && value.summary.total_count}
+            dataKey="like_count"
           />
           <Column
-            dataKey="comments"
-            getter={value => value && value.summary && value.summary.total_count}
+            dataKey="comment_count"
             cell={({ children, row }) => (
               <TextCell>
                 {children ? (

@@ -70,7 +70,7 @@ export default class CommentsDisplay extends Component {
             dataKey="id"
             cell={({ row }) => (
               <LinkCell href={row.permalink_url}>
-                {row.id.split('_')[1]}
+                {row.shortId}
               </LinkCell>
             )}
           />
@@ -84,8 +84,7 @@ export default class CommentsDisplay extends Component {
           />
           <Column dataKey="message" />
           <Column
-            dataKey="comments"
-            getter={value => value && value.summary && value.summary.total_count}
+            dataKey="comment_count"
             cell={({ children, row }) => (
               <TextCell>
                 {children ? (

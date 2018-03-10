@@ -1,4 +1,5 @@
 import { Map } from 'immutable';
+import { actionTypes } from 'redux-localstorage';
 
 const defaultStatePiece = Map({
   isFetching: false,
@@ -11,6 +12,7 @@ const defaultState = Map({});
 export default ({
   actions,
   key,
+  Record,
 }) => {
   if (!actions) {
     throw new Error('No action symbols provided.');
@@ -21,34 +23,49 @@ export default ({
   }
 
   return (state = defaultState, action) => {
-    if (!actions.includes(action.type)) {
-      return state;
-    }
-
-    const keyArray = (typeof key === 'function' ? key(state, action) : key);
-    const statePiece = state.getIn(keyArray, defaultStatePiece);
+    const getKeyArray = () => (typeof key === 'function' ? key(state, action) : key);
+    const getStatePiece = () => state.getIn(getKeyArray(), defaultStatePiece);
+    const updateStatePiece = data => state.setIn(getKeyArray(), getStatePiece().merge(data));
+    const parseDataRecords = statePiece => statePiece.map((statePiece2) => {
+      const statePieceData = statePiece2.get('data');
+      if (!statePieceData) {
+        return parseDataRecords(statePiece2);
+      }
+      const data = statePieceData.map(row => new Record(row));
+      return statePiece2.set('data', data);
+    });
 
     switch (action.type) {
-      case actions[0]: // Request
-        return state.setIn(keyArray, statePiece.merge({
+      case actionTypes.INIT: {
+        if (!Record) {
+          return state;
+        }
+        return parseDataRecords(state);
+      }
+      case actions[0]: { // Request
+        return updateStatePiece({
           isFetching: true,
           data: null,
           error: null,
-        }));
-      case actions[1]: // Success
-        return state.setIn(keyArray, statePiece.merge({
+        });
+      }
+      case actions[1]: { // Success
+        const data = Record ? action.data.map(row => new Record(row)) : action.data;
+        return updateStatePiece({
           isFetching: false,
-          data: action.data,
+          data,
           error: null,
-        }));
-      case actions[2]: // Failure
-        return state.setIn(keyArray, statePiece.merge({
+        });
+      }
+      case actions[2]: { // Failure
+        return updateStatePiece({
           isFetching: false,
           data: false,
           error: action.error,
-        }));
+        });
+      }
       default:
-        return null;
+        return state;
     }
   };
 };
