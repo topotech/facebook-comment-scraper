@@ -105,6 +105,7 @@ class DownloadPosts extends Component {
                 onChange={this.onDateToChange}
                 value={dateTo}
                 minDate={dateFrom}
+                maxDate={new Date()}
               />
             </div>
           </fieldset>

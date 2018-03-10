@@ -98,9 +98,12 @@ button {
   border-radius: 2px;
   background: @facebook-lighter-gray;
   border: 1px solid @facebook-darker-gray;
-  cursor: pointer;
   font-size: inherit;
   font-weight: bold;
+
+  &:enabled {
+    cursor: pointer;
+  }
 
   &:hover {
     background: @facebook-light-gray;
