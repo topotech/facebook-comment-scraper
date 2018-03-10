@@ -9,7 +9,7 @@ const toSafeValue = value => (
 
 const LinkCell = ({ children, href }) => (
   <td>
-    <a href={href}>
+    <a href={href} target="_blank">
       {toSafeValue(children)}
     </a>
   </td>
