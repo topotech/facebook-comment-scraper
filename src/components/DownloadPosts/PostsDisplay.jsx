@@ -1,15 +1,12 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
-import { Link } from 'react-router-dom';
 
-import Table, { Column } from '../_common/Table';
-import DateCell from '../_common/DateCell';
-import LinkCell from '../_common/LinkCell';
-import TextCell from '../_common/TextCell';
 import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
 import RefreshButton from '../_common/RefreshButton';
+
+import PostsTable from '../_tables/PostsTable';
 
 import { queryStringToObject } from '../../utils/url';
 
@@ -75,40 +72,7 @@ export default class PostsDisplay extends PureComponent {
             filename={`posts_${pageId}`}
           />
         </div>
-        <Table data={rows}>
-          <Column
-            dataKey="id"
-            cell={({ row }) => (
-              <LinkCell href={row.permalink_url}>
-                {row.shortId}
-              </LinkCell>
-            )}
-          />
-          <Column
-            dataKey="created_time"
-            cell={({ children }) => (
-              <DateCell>
-                {children}
-              </DateCell>
-            )}
-          />
-          <Column dataKey="message" />
-          <Column
-            dataKey="like_count"
-          />
-          <Column
-            dataKey="comment_count"
-            cell={({ children, row }) => (
-              <TextCell>
-                {children ? (
-                  <Link to={`/download-comments/${row.id}`}>
-                    {children}
-                  </Link>
-                ) : ''}
-              </TextCell>
-            )}
-          />
-        </Table>
+        <PostsTable data={rows} />
       </React.Fragment>
     );
   }
