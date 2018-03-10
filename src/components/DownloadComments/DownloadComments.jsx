@@ -41,7 +41,13 @@ class DownloadComments extends Component {
           <fieldset>
             <div>
               <label htmlFor="postId">Post ID or comment ID</label>
-              <input type="text" id="pageUri" value={postId || ''} onChange={this.onChange} />
+              <input
+                type="text"
+                id="postId"
+                value={postId || ''}
+                onChange={this.onChange}
+                placeholder="eg. 56246989582_10156209097464583"
+              />
             </div>
           </fieldset>
         </section>

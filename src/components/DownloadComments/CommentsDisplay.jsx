@@ -7,6 +7,7 @@ import Table, { Column } from '../_common/Table';
 import DateCell from '../_common/DateCell';
 import LinkCell from '../_common/LinkCell';
 import TextCell from '../_common/TextCell';
+import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
 
 export default class CommentsDisplay extends Component {
@@ -50,16 +51,22 @@ export default class CommentsDisplay extends Component {
   }
 
   renderContent() {
-    const { request } = this.props;
+    const { postId, request } = this.props;
+
+    const data = request.get('data');
 
     return (
       <React.Fragment>
-        <button onClick={this.onClickFetch}>
-          Refresh data
-        </button>
-        <Table
-          data={request.get('data')}
-        >
+        <div className="table-toolbar">
+          <button onClick={this.onClickFetch}>
+            Refresh data
+          </button>
+          <DownloadAs
+            data={data}
+            filename={`comments_${postId}`}
+          />
+        </div>
+        <Table data={data}>
           <Column
             dataKey="id"
             cell={({ row }) => (

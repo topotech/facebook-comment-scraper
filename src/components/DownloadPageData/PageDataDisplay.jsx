@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 
 import Table, { Column } from '../_common/Table';
+import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
 
 export default class PageDataDisplay extends Component {
@@ -44,14 +45,22 @@ export default class PageDataDisplay extends Component {
   }
 
   renderContent() {
-    const { request } = this.props;
+    const { pageUri, request } = this.props;
+
+    const data = request.get('data');
 
     return (
       <React.Fragment>
-        <button onClick={this.onClickFetch}>
-          Refresh data
-        </button>
-        <Table data={request.get('data')}>
+        <div className="table-toolbar">
+          <button onClick={this.onClickFetch}>
+            Refresh data
+          </button>
+          <DownloadAs
+            data={data}
+            filename={`pagedata_${pageUri}`}
+          />
+        </div>
+        <Table data={data}>
           <Column dataKey="id" />
           <Column dataKey="name" />
         </Table>

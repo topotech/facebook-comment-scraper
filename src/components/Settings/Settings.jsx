@@ -1,28 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-const read = () => btoa(unescape(encodeURIComponent(window.localStorage['facebook-comment-scraper'])));
+import { decode, encode } from '../../utils/base64';
+import { download } from '../../utils/file';
 
-const decode = str => decodeURIComponent(escape(atob(str)));
+const read = () => encode(window.localStorage['facebook-comment-scraper']);
 
 const write = (data) => {
   if (confirm('This will permanently overwrite your previous settings. Do you really want to continue?')) {
     window.localStorage['facebook-comment-scraper'] = data;
     window.location.reload();
   }
-};
-
-const download = (filename, text) => {
-  const element = document.createElement('a');
-  element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
-  element.setAttribute('download', filename);
-
-  element.style.display = 'none';
-  document.body.appendChild(element);
-
-  element.click();
-
-  document.body.removeChild(element);
 };
 
 export default class Settings extends Component {
@@ -77,6 +65,7 @@ export default class Settings extends Component {
               id="id"
               defaultValue={apiId}
               onChange={event => this.props.setId(event.target.value)}
+              placeholder="eg. 100001234567890"
               pattern="^[0-9]*$"
             />
           </div>
@@ -88,6 +77,7 @@ export default class Settings extends Component {
               id="key"
               defaultValue={apiKey}
               onChange={event => this.props.setKey(event.target.value)}
+              placeholder="eg. 3dbafd352b6f06caeb2b997281001b7a"
               pattern="^[0-9a-f]*$"
             />
           </div>

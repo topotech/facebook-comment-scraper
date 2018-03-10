@@ -7,6 +7,7 @@ import Table, { Column } from '../_common/Table';
 import DateCell from '../_common/DateCell';
 import LinkCell from '../_common/LinkCell';
 import TextCell from '../_common/TextCell';
+import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
 
 import { queryStringToObject } from '../../utils/url';
@@ -58,16 +59,22 @@ export default class PostsDisplay extends Component {
   }
 
   renderContent() {
-    const { request } = this.props;
+    const { pageId, request } = this.props;
+
+    const data = request.get('data');
 
     return (
       <React.Fragment>
-        <button onClick={this.onClickFetch}>
-          Refresh data
-        </button>
-        <Table
-          data={request.get('data')}
-        >
+        <div className="table-toolbar">
+          <button onClick={this.onClickFetch}>
+            Refresh data
+          </button>
+          <DownloadAs
+            data={data}
+            filename={`posts_${pageId}`}
+          />
+        </div>
+        <Table data={data}>
           <Column
             dataKey="id"
             cell={({ row }) => (

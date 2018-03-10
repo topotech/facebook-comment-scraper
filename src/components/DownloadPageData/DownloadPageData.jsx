@@ -57,6 +57,7 @@ class DownloadPageData extends Component {
                 id="pageUri"
                 value={pageUri || ''}
                 onChange={this.onChange}
+                placeholder="eg. gazetapl"
               />
             </div>
           </fieldset>
