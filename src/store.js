@@ -13,13 +13,20 @@ const filterOutUnsafe = statePiece =>
   Object.keys(statePiece).reduce((newObject, currentKey) => {
     const currentPiece = statePiece[currentKey];
 
+    if (!currentPiece || !typeof currentPiece !== 'object') {
+      return {
+        ...newObject,
+        [currentKey]: currentPiece,
+      };
+    }
+
     if (currentPiece.error || currentPiece.isLoading) {
       return newObject;
     }
 
     return {
       ...newObject,
-      [currentKey]: currentPiece,
+      [currentKey]: filterOutUnsafe(currentPiece),
     };
   }, {});
 
