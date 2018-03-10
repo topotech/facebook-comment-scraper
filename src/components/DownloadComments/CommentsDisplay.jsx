@@ -7,6 +7,7 @@ import Table, { Column } from '../_common/Table';
 import DateCell from '../_common/DateCell';
 import LinkCell from '../_common/LinkCell';
 import TextCell from '../_common/TextCell';
+import ErrorMessage from '../_common/ErrorMessage';
 
 export default class CommentsDisplay extends Component {
   static propTypes = {
@@ -40,12 +41,7 @@ export default class CommentsDisplay extends Component {
     return (
       <React.Fragment>
         <p>Failed to fetch posts for {postId}.</p>
-        {error && (
-          <p>
-            System error message:
-            <code>{error.message || 'Unknown error'}</code>
-          </p>
-        )}
+        <ErrorMessage error={error} />
         <button onClick={this.onClickFetch}>
           Retry
         </button>

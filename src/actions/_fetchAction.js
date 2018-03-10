@@ -25,13 +25,15 @@ export default ({
     const key = api.get('key');
 
     if (!id) {
-      dispatch({ type: FAILURE, error: 'Unable to make a request with no Facebook ID', options });
-      return Promise.reject();
+      const error = 'Unable to make a request with no Facebook ID';
+      dispatch({ type: FAILURE, error, options });
+      return Promise.reject(new Error(error));
     }
 
     if (!key) {
-      dispatch({ type: FAILURE, error: 'Unable to make a request with no API Key', options });
-      return Promise.reject();
+      const error = 'Unable to make a request with no API Key';
+      dispatch({ type: FAILURE, error, options });
+      return Promise.reject(new Error(error));
     }
 
     const urlString = typeof url === 'function' ? url(state, options) : url;

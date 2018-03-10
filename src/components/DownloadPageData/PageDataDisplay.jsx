@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Map } from 'immutable';
 
 import Table, { Column } from '../_common/Table';
+import ErrorMessage from '../_common/ErrorMessage';
 
 export default class PageDataDisplay extends Component {
   static propTypes = {
@@ -29,12 +30,12 @@ export default class PageDataDisplay extends Component {
   renderRetryButton() {
     const { pageUri, request } = this.props;
 
+    const error = request.get('error');
+
     return (
       <React.Fragment>
         <p>Failed to fetch data for {pageUri}.</p>
-        <p>
-          <code>{request.get('error')}</code>
-        </p>
+        <ErrorMessage error={error} />
         <button onClick={this.onClickFetch}>
           Retry
         </button>

@@ -14,18 +14,12 @@
   "rules": {
     "class-methods-use-this": "off",
     "function-paren-newline": "off",
-    "global-require": "off",
     "jsx-a11y/anchor-is-valid": "off",
     "jsx-a11y/label-has-for": ["error", { "required": { "some": ["id", "nesting"] }}],
-    "max-len": "error",
     "no-alert": "off",
-    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["canvas", "element"] }],
     "no-restricted-globals": "off",
     "prefer-destructuring": "warn",
     "prefer-spread": "warn",
-    "react/no-typos": "off",
-    "react/prefer-stateless-function": "off",
-    "react/require-default-props": "off",
-    "react/sort-comp": "off"
+    "react/require-default-props": "off"
   }
 }
