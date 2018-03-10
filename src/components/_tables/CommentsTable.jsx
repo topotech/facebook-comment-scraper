@@ -11,6 +11,7 @@ const CommentsTable = props => (
   <Table {...props}>
     <Column
       dataKey="id"
+      header="ID"
       cell={({ row }) => (
         <TextCell>
           <Link to={`https://www.facebook.com/${row.id}`}>
@@ -21,15 +22,20 @@ const CommentsTable = props => (
     />
     <Column
       dataKey="created_time"
+      header="Date"
       cell={({ children }) => (
         <DateCell>
           {children}
         </DateCell>
       )}
     />
-    <Column dataKey="message" />
+    <Column
+      dataKey="message"
+      header="Message"
+    />
     <Column
       dataKey="comment_count"
+      header="Comments"
       cell={({ children, row }) => (
         <TextCell>
           {children ? (

@@ -10,6 +10,7 @@ const PageDataTable = props => (
   <Table {...props}>
     <Column
       dataKey="id"
+      header="ID"
       cell={({ row }) => (
         <TextCell>
           <Link to={`https://www.facebook.com/${row.id}`}>
@@ -18,9 +19,13 @@ const PageDataTable = props => (
         </TextCell>
       )}
     />
-    <Column dataKey="name" />
+    <Column
+      dataKey="name"
+      header="Page name"
+    />
     <Column
       dataKey="posts"
+      header="Posts"
       cell={({ row }) => (
         <TextCell>
           <Link to={`/download-posts/${row.id}`}>
