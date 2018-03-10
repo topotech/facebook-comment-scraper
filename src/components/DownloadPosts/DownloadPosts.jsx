@@ -49,7 +49,7 @@ class DownloadPosts extends Component {
     this.props.history.replace({
       search: objectToQueryString({
         ...oldSearch,
-        dateFrom: dateFrom.getTime(),
+        dateFrom: dateFrom ? dateFrom.getTime() : dateFrom,
       }),
     });
   }
@@ -60,7 +60,7 @@ class DownloadPosts extends Component {
     this.props.history.replace({
       search: objectToQueryString({
         ...oldSearch,
-        dateTo: dateTo.getTime(),
+        dateTo: dateTo ? dateTo.getTime() : dateTo,
       }),
     });
   }
