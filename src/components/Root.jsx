@@ -3,7 +3,7 @@ import React from 'react';
 import './Root.less';
 
 import Header from './Header';
-import Menu from './Menu';
+import Menu from '../containers/Menu';
 import Main from './Main';
 import NetworkListener from '../containers/NetworkListener';
 
