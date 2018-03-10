@@ -23,7 +23,7 @@ export default class CorpusAnalysis extends PureComponent {
     this.props.history.replace({
       search: objectToQueryString({
         ...oldSearch,
-        search,
+        search: search || '',
       }),
     });
   }

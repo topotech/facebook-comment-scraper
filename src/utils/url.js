@@ -24,8 +24,13 @@ export const objectToQueryString = (data = {}) => {
 export const queryStringToObject = (search, smartParsing = true) => {
   const queryString = search.replace(/(^\?)/, '');
   function mapPairs(pair) {
-    const pairArray = pair.split('=');
-    const rawValue = decodeURIComponent(pairArray[1] || null);
+    const [key, unparsedValue] = pair.split('=');
+
+    if (!unparsedValue.length) {
+      return this;
+    }
+
+    const rawValue = decodeURIComponent(unparsedValue || null);
     let value = rawValue;
     if (smartParsing) {
       if (rawValue.match(/^[0-9]*$/)) {
@@ -34,7 +39,7 @@ export const queryStringToObject = (search, smartParsing = true) => {
         value = value === 'true';
       }
     }
-    this[decodeURIComponent(pairArray[0])] = value;
+    this[decodeURIComponent(key)] = value;
     return this;
   }
   return queryString.length ? queryString.split('&').map(mapPairs.bind({}))[0] : {};

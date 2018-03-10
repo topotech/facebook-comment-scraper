@@ -3,20 +3,24 @@ import { withRouter } from 'react-router';
 
 import fetchComments from '../../actions/comments';
 
-import { makeGetRows } from '../../selectors/request';
-
 import CommentsDisplay from '../../components/CorpusAnalysis/CommentsDisplay';
 
-const getRows = makeGetRows('comments');
+import { stringToArray } from '../../utils/string';
+import { queryStringToObject } from '../../utils/url';
 
 export default withRouter(connect(
   (state, ownProps) => {
-    const postId = ownProps.postId || ownProps.match.params.postId;
-    const rows = postId ? getRows(state, postId) : state.comments.get('records').toList();
+    const query = queryStringToObject(ownProps.location.search);
+    const rows = state.comments.get('records').toList();
+
+    const mark = stringToArray(query.search);
+    const filteredRows = mark.length ? rows.filter(row =>
+      mark.some(markWord => row.message.includes(markWord)),
+    ) : rows;
 
     return {
-      postId,
-      rows,
+      rows: filteredRows,
+      mark,
     };
   },
   { fetchData: fetchComments },
