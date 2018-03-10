@@ -8,6 +8,7 @@ import DownloadPageData from '../containers/DownloadPageData/DownloadPageData';
 import DownloadPosts from '../containers/DownloadPosts/DownloadPosts';
 import DownloadComments from '../containers/DownloadComments/DownloadComments';
 import Settings from '../containers/Settings/Settings';
+import CorpusAnalysis from '../containers/CorpusAnalysis/CorpusAnalysis';
 
 const Main = () => (
   <main>
@@ -19,6 +20,7 @@ const Main = () => (
       <Route exact path="/download-posts/:pageId" component={DownloadPosts} />
       <Route exact path="/download-comments" component={DownloadComments} />
       <Route exact path="/download-comments/:postId" component={DownloadComments} />
+      <Route exact path="/corpus-analysis" component={CorpusAnalysis} />
       <Route exact path="/settings" component={Settings} />
     </Switch>
   </main>

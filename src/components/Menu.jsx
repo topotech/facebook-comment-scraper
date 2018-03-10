@@ -28,6 +28,11 @@ export default class Menu extends Component {
       icon: 'comment',
     },
     {
+      to: '/corpus-analysis',
+      label: 'Corpus analysis',
+      icon: 'location_searching',
+    },
+    {
       to: '/settings',
       label: 'Settings',
       icon: 'settings',

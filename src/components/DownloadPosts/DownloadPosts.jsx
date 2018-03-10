@@ -68,9 +68,9 @@ class DownloadPosts extends Component {
   render() {
     const { pages } = this.props;
     const { pageId } = this.props.match.params;
-    const search = queryStringToObject(this.props.location.search);
-    const dateFrom = search.dateFrom ? new Date(search.dateFrom) : null;
-    const dateTo = search.dateTo ? new Date(search.dateTo) : null;
+    const query = queryStringToObject(this.props.location.search);
+    const dateFrom = query.dateFrom ? new Date(query.dateFrom) : null;
+    const dateTo = query.dateTo ? new Date(query.dateTo) : null;
 
     return (
       <React.Fragment>

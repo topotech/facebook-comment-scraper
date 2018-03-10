@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { List, Map } from 'immutable';
 
+import './DownloadAs.less';
+
 import { download } from '../../utils/file';
 import jsonToCSV from '../../utils/csv';
 
@@ -49,7 +51,7 @@ export default class DownloadAs extends Component {
 
   render() {
     return (
-      <fieldset>
+      <fieldset className="downloadAs">
         <div>
           <label htmlFor="downloadAs">Download as...</label>
           <select onChange={this.onOptionChange}>

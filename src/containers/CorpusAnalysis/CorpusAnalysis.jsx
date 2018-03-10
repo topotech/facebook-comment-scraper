@@ -1,8 +1,8 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import DownloadComments from '../../components/DownloadComments/DownloadComments';
+import CorpusAnalysis from '../../components/CorpusAnalysis/CorpusAnalysis';
 
 export default withRouter(connect(
   null,
-)(DownloadComments));
+)(CorpusAnalysis));

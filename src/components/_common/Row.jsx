@@ -20,7 +20,7 @@ export default class Row extends Component {
   }
 
   renderCell(columnProps) {
-    const { row } = this.props;
+    const { row, ...otherRowProps } = this.props;
     const {
       cell = TextCell,
       dataKey,
@@ -41,7 +41,7 @@ export default class Row extends Component {
     }
 
     if (typeof cell === 'function') {
-      return React.createElement(cell, { row, ...otherColumnProps }, finalValue);
+      return React.createElement(cell, { row, ...otherColumnProps, ...otherRowProps }, finalValue);
     }
 
     return null;

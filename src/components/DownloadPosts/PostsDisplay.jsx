@@ -30,9 +30,9 @@ export default class PostsDisplay extends Component {
 
   onClickFetch = () => {
     const { pageId } = this.props;
-    const search = queryStringToObject(this.props.location.search);
+    const query = queryStringToObject(this.props.location.search);
 
-    this.props.fetchData({ pageId, ...search });
+    this.props.fetchData({ pageId, ...query });
   }
 
   renderFetchButton() {

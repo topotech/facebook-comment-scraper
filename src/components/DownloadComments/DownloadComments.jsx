@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
 
 import CommentsDisplay from '../../containers/DownloadComments/CommentsDisplay';
 
 import { pushLastPiece, replaceLastPiece } from '../../utils/url';
 
-class DownloadComments extends Component {
+export default class DownloadComments extends Component {
   static propTypes = {
     history: PropTypes.shape({
       replace: PropTypes.func.isRequired,
@@ -56,5 +55,3 @@ class DownloadComments extends Component {
     );
   }
 }
-
-export default withRouter(DownloadComments);

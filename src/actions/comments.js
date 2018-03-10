@@ -16,6 +16,8 @@ const fields = [
   'comments.limit(0).summary(true)',
 ];
 
+const limit = 100;
+
 export default createFetchAction({
   actions: [
     COMMENTS_REQUEST,
@@ -28,6 +30,7 @@ export default createFetchAction({
     } = args;
     return `${config.apiUrl}${postId}/comments/?${objectToQueryString({
       fields,
+      limit,
       ...toFacebookFormat(otherArgs),
     })}`;
   },

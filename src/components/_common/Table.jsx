@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { List, Map, Record } from 'immutable';
+import { List, Map } from 'immutable';
 
 import Row from './Row';
 import HeaderRow from './HeaderRow';
+
+import './Table.less';
 
 export const Column = () => null;
 

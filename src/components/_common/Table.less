@@ -1,0 +1,36 @@
+@import (reference) '../colors.less';
+@import (reference) '../variables.less';
+
+table {
+  width: calc(100% + 26px);
+  margin: 1em -13px;
+  border: 1px solid @border-color;
+  border-collapse: collapse;
+
+  th, td {
+    padding: 8px @padding;
+    white-space: pre-wrap;
+  }
+
+  th {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  thead {
+    font-weight: bold;
+    background-color: rgb(245, 247, 248);
+  }
+
+  tbody {
+    tr {
+      &:nth-child(odd) {
+        background-color: rgb(255, 255, 255);
+      }
+
+      &:nth-child(even) {
+        background-color: rgb(245, 247, 248);
+      }
+    }
+  }
+}
