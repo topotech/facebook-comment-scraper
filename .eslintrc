@@ -20,6 +20,7 @@
     "no-restricted-globals": "off",
     "prefer-destructuring": "warn",
     "prefer-spread": "warn",
+    "react/no-unescaped-entities": "off",
     "react/require-default-props": "off"
   }
 }

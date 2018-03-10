@@ -85,23 +85,6 @@ input {
   }
 }
 
-.table-toolbar {
-  display: flex;
-  margin: -@margin/2;
-
-  & > * {
-    margin: @margin/2;
-  }
-
-  label {
-    width: auto;
-  }
-
-  input, select, .react-date-picker__button {
-    height: 30px;
-  }
-}
-
 button {
   line-height: 26px;
   border-radius: 2px;
@@ -120,6 +103,34 @@ button.main {
   background: @facebook-light-blue;
   border-color: @facebook-light-blue;
   color: white;
+}
+
+.table-toolbar {
+  display: flex;
+  margin: -@margin/2;
+
+  & > * {
+    margin: @margin/2;
+  }
+
+  label {
+    width: auto;
+  }
+
+  input, select, .react-date-picker__button {
+    height: 30px;
+  }
+}
+
+.warning-message {
+  grid-area: warning;
+  padding: @padding;
+  background-color: rgb(39, 72, 126);
+  color: rgba(255, 255, 255, .8);
+
+  p {
+    margin: 0;
+  }
 }
 
 code {
@@ -167,9 +178,9 @@ table {
   width: 100vw;
   height: 100vh;
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto auto 1fr;
   grid-template-columns: 180px 1fr;
-  grid-template-areas: "header header" "menu main";
+  grid-template-areas: "warning warning" "header header" "menu main";
 }
 
 .react-date-picker {
