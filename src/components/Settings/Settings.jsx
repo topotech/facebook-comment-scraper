@@ -77,6 +77,7 @@ export default class Settings extends Component {
               id="id"
               defaultValue={apiId}
               onChange={event => this.props.setId(event.target.value)}
+              pattern="^[0-9]*$"
             />
           </div>
 
@@ -87,6 +88,7 @@ export default class Settings extends Component {
               id="key"
               defaultValue={apiKey}
               onChange={event => this.props.setKey(event.target.value)}
+              pattern="^[0-9a-f]*$"
             />
           </div>
 
