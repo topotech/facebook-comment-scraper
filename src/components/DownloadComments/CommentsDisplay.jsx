@@ -13,7 +13,7 @@ import CommentsTable from '../_tables/CommentsTable';
 export default class CommentsDisplay extends PureComponent {
   static propTypes = {
     fetchData: PropTypes.func.isRequired,
-    postId: PropTypes.string,
+    itemId: PropTypes.string,
     request: PropTypes.instanceOf(Map),
     rows: PropTypes.oneOfType([
       PropTypes.instanceOf(List),
@@ -22,30 +22,30 @@ export default class CommentsDisplay extends PureComponent {
   }
 
   onClickFetch = () => {
-    const { postId } = this.props;
-    this.props.fetchData({ postId });
+    const { itemId } = this.props;
+    this.props.fetchData({ itemId });
   }
 
   renderFetchButton() {
-    const { postId } = this.props;
+    const { itemId } = this.props;
 
     return (
       <React.Fragment>
         <button onClick={this.onClickFetch}>
-          Fetch comments for {postId}
+          Fetch comments for {itemId}
         </button>
       </React.Fragment>
     );
   }
 
   renderRetryButton() {
-    const { postId, request } = this.props;
+    const { itemId, request } = this.props;
 
     const error = request.get('error');
 
     return (
       <React.Fragment>
-        <p>Failed to fetch posts for {postId}.</p>
+        <p>Failed to fetch posts for {itemId}.</p>
         <ErrorMessage error={error} />
         <button onClick={this.onClickFetch}>
           Retry
@@ -55,7 +55,7 @@ export default class CommentsDisplay extends PureComponent {
   }
 
   renderContent() {
-    const { postId, rows } = this.props;
+    const { itemId, rows } = this.props;
 
     return (
       <React.Fragment>
@@ -65,7 +65,7 @@ export default class CommentsDisplay extends PureComponent {
           <RefreshButton onClick={this.onClickFetch} />
           <DownloadAs
             data={rows}
-            filename={`comments_${postId}`}
+            filename={`comments_${itemId}`}
           />
         </div>
         <CommentsTable data={rows} />
@@ -74,7 +74,7 @@ export default class CommentsDisplay extends PureComponent {
   }
 
   render() {
-    const { rows, postId } = this.props;
+    const { rows, itemId } = this.props;
 
     let content;
     if (rows === false) {
@@ -82,7 +82,7 @@ export default class CommentsDisplay extends PureComponent {
     } else if (rows === null) {
       content = 'Loading';
     } else if (!rows) {
-      if (!postId) {
+      if (!itemId) {
         content = 'Type in post ID or comment ID';
       } else {
         content = this.renderFetchButton();
@@ -93,7 +93,7 @@ export default class CommentsDisplay extends PureComponent {
 
     return (
       <section>
-        <h2>Comments {postId ? `for ${postId}` : ''}</h2>
+        <h2>Comments {itemId ? `for ${itemId}` : ''}</h2>
         {content}
       </section>
     );

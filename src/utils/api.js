@@ -4,6 +4,10 @@ export const toFacebookFormat = args =>
     let key = currentKey;
     let value = args[key];
 
+    if (key === 'comments_only') {
+      return newObject;
+    }
+
     if (key === 'dateFrom') {
       key = 'since';
       value /= 1000;

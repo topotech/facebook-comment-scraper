@@ -19,7 +19,7 @@ const Main = () => (
       <Route exact path="/download-posts" component={DownloadPosts} />
       <Route exact path="/download-posts/:pageId" component={DownloadPosts} />
       <Route exact path="/download-comments" component={DownloadComments} />
-      <Route exact path="/download-comments/:postId" component={DownloadComments} />
+      <Route exact path="/download-comments/:itemId" component={DownloadComments} />
       <Route exact path="/corpus-analysis" component={CorpusAnalysis} />
       <Route exact path="/settings" component={Settings} />
     </Switch>

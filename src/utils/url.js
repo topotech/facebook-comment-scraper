@@ -46,7 +46,10 @@ export const queryStringToObject = (search, smartParsing = true) => {
 };
 
 export const mergeSearchWithDefaults = (search = '?', defaultParams) => {
-  const searchParams = queryStringToObject(search);
+  const {
+    comments_only: commentsOnly,
+    ...searchParams
+  } = queryStringToObject(search);
 
   const mergedParams = {
     ...defaultParams,

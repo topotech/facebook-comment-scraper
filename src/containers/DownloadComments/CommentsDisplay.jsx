@@ -7,19 +7,26 @@ import { makeGetRequest, makeGetRows } from '../../selectors/request';
 
 import CommentsDisplay from '../../components/DownloadComments/CommentsDisplay';
 
-import { mergeSearchWithDefaults } from '../../utils/url';
+import { mergeSearchWithDefaults, queryStringToObject } from '../../utils/url';
 
 const getRequest = makeGetRequest('comments');
 const getRows = makeGetRows('comments');
 
 export default withRouter(connect(
   (state, ownProps) => {
-    const postId = ownProps.postId || ownProps.match.params.postId;
-    const query = mergeSearchWithDefaults(ownProps.location.search, defaultParams);
+    const itemId = ownProps.itemId || ownProps.match.params.itemId;
+    const { search } = ownProps.location;
+    const { comments_only: commentsOnly } = queryStringToObject(search);
+    const query = mergeSearchWithDefaults(search, defaultParams);
+
+    const rows = getRows(state, [itemId, query]);
+    const filteredRows = commentsOnly ? rows.filter(row => row.comment_count) : rows;
+
     return {
-      postId,
-      request: getRequest(state, [postId, query]),
-      rows: getRows(state, [postId, query]),
+      itemId,
+      request: getRequest(state, [itemId, query]),
+      rows: filteredRows,
+      query,
     };
   },
   { fetchData: fetchComments },

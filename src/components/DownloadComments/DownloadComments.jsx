@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import CommentsDisplay from '../../containers/DownloadComments/CommentsDisplay';
 
-import { pushLastPiece, replaceLastPiece } from '../../utils/url';
+import { pushLastPiece, replaceLastPiece, objectToQueryString, queryStringToObject } from '../../utils/url';
 
 export default class DownloadComments extends PureComponent {
   static propTypes = {
@@ -12,26 +12,41 @@ export default class DownloadComments extends PureComponent {
     }).isRequired,
     location: PropTypes.shape({
       pathname: PropTypes.string.isRequired,
+      search: PropTypes.string,
     }).isRequired,
     match: PropTypes.shape({
       params: PropTypes.shape({
-        postId: PropTypes.string,
+        itemId: PropTypes.string,
       }).isRequired,
     }).isRequired,
   }
 
-  onChange = (event) => {
-    const { postId } = this.props.match.params;
+  onitemIdChange = (event) => {
+    const { itemId } = this.props.match.params;
 
     this.props.history.replace(
-      (postId ?
+      (itemId ?
         replaceLastPiece :
         pushLastPiece)(this.props.location.pathname, event.target.value),
     );
   }
 
+  onCommentsChange = (event) => {
+    const oldSearch = queryStringToObject(this.props.location.search);
+    const { checked } = event.target;
+
+    this.props.history.replace({
+      search: objectToQueryString({
+        ...oldSearch,
+        comments_only: checked,
+      }),
+    });
+  };
+
   render() {
-    const { postId } = this.props.match.params;
+    const { itemId } = this.props.match.params;
+    const query = queryStringToObject(this.props.location.search);
+    const { comments_only: commentsOnly } = query;
 
     return (
       <React.Fragment>
@@ -39,18 +54,27 @@ export default class DownloadComments extends PureComponent {
           <h2>Download comments</h2>
           <fieldset>
             <div>
-              <label htmlFor="postId">Post ID or comment ID</label>
+              <label htmlFor="itemId">Post ID or comment ID</label>
               <input
                 type="text"
-                id="postId"
-                value={postId || ''}
-                onChange={this.onChange}
+                id="itemId"
+                value={itemId || ''}
+                onChange={this.onitemIdChange}
                 placeholder="eg. 56246989582_10156209097464583"
+              />
+            </div>
+            <div>
+              <label htmlFor="withCommentsOnly">With comments only</label>
+              <input
+                type="checkbox"
+                id="withCommentsOnly"
+                checked={commentsOnly}
+                onChange={this.onCommentsChange}
               />
             </div>
           </fieldset>
         </section>
-        <CommentsDisplay postId={postId} />
+        <CommentsDisplay itemId={itemId} />
       </React.Fragment>
     );
   }
