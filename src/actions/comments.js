@@ -13,10 +13,16 @@ const fields = [
   'id',
   'created_time',
   'message',
+  'likes.limit(0).summary(true)',
   'comments.limit(0).summary(true)',
 ];
-
 const limit = 100;
+const offset = 0;
+
+export const defaultParams = {
+  limit,
+  offset,
+};
 
 export default createFetchAction({
   actions: [
@@ -25,12 +31,10 @@ export default createFetchAction({
     COMMENTS_FAILURE,
   ],
   url: (state, args) => {
-    const {
-      postId, ...otherArgs
-    } = args;
+    const { postId, ...otherArgs } = args;
     return `${config.apiUrl}${postId}/comments/?${objectToQueryString({
       fields,
-      limit,
+      ...defaultParams,
       ...toFacebookFormat(otherArgs),
     })}`;
   },

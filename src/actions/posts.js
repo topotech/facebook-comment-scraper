@@ -24,8 +24,13 @@ const fields = [
   'reactions.limit(0).summary(true)',
   */
 ];
-
 const limit = 100;
+const offset = 0;
+
+export const defaultParams = {
+  limit,
+  offset,
+};
 
 export default createFetchAction({
   actions: [
@@ -34,12 +39,10 @@ export default createFetchAction({
     POSTS_FAILURE,
   ],
   url: (state, args) => {
-    const {
-      pageId, ...otherArgs
-    } = args;
+    const { pageId, ...otherArgs } = args;
     return `${config.apiUrl}${pageId}/posts/?${objectToQueryString({
       fields,
-      limit,
+      ...defaultParams,
       ...toFacebookFormat(otherArgs),
     })}`;
   },

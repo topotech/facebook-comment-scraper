@@ -6,6 +6,7 @@ import {
   COMMENTS_SUCCESS,
   COMMENTS_FAILURE,
 } from '../actions/comments';
+import { objectToQueryString } from '../utils/url';
 
 export default createFetchReducer({
   actions: [
@@ -13,6 +14,9 @@ export default createFetchReducer({
     COMMENTS_SUCCESS,
     COMMENTS_FAILURE,
   ],
-  key: (state, action) => [action.options.postId],
+  key: (state, action) => {
+    const { postId, ...otherOptions } = action.options;
+    return [postId, objectToQueryString({ limit: 100, offset: 0, ...otherOptions })];
+  },
   Record: Comment,
 });

@@ -16,7 +16,7 @@ export default createFetchReducer({
   ],
   key: (state, action) => {
     const { pageId, ...otherOptions } = action.options;
-    return [pageId, objectToQueryString(otherOptions)];
+    return [pageId, objectToQueryString({ limit: 100, offset: 0, ...otherOptions })];
   },
   Record: Post,
 });

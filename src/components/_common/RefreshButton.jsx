@@ -7,7 +7,7 @@ import Icon from './Icon';
 const RefreshButton = ({ onClick }) => (
   <button onClick={onClick}>
     <Icon>refresh</Icon>
-    Refresh data
+    Refresh
   </button>
 );
 

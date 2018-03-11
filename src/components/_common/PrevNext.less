@@ -1,0 +1,26 @@
+.prevNext {
+  button {
+    overflow: hidden;
+
+    &:first-child {
+      border-top-right-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    &:last-child {
+      margin-left: -1px;
+      border-top-left-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+
+    &:focus {
+      position: relative;
+      z-index: 1;
+    }
+
+    i {
+      margin-left: -3em;
+      margin-right: 0 !important;
+    }
+  }
+}

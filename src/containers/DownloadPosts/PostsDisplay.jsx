@@ -1,11 +1,13 @@
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
-import fetchPosts from '../../actions/posts';
+import fetchPosts, { defaultParams } from '../../actions/posts';
 
 import { makeGetRequest, makeGetRows } from '../../selectors/request';
 
 import PostsDisplay from '../../components/DownloadPosts/PostsDisplay';
+
+import { mergeSearchWithDefaults } from '../../utils/url';
 
 const getRequest = makeGetRequest('posts');
 const getRows = makeGetRows('posts');
@@ -13,12 +15,13 @@ const getRows = makeGetRows('posts');
 export default withRouter(connect(
   (state, ownProps) => {
     const pageId = ownProps.pageId || ownProps.match.params.pageId;
-    const search = ownProps.location.search ? ownProps.location.search.slice(1) : '';
+    const query = mergeSearchWithDefaults(ownProps.location.search, defaultParams);
     return {
       page: state.pageData.getIn(['records', pageId]),
       pageId,
-      request: getRequest(state, [pageId, search]),
-      rows: getRows(state, [pageId, search]),
+      request: getRequest(state, [pageId, query]),
+      rows: getRows(state, [pageId, query]),
+      query,
     };
   },
   { fetchData: fetchPosts },

@@ -5,6 +5,8 @@ import { List, Map } from 'immutable';
 import DownloadAs from '../_common/DownloadAs';
 import ErrorMessage from '../_common/ErrorMessage';
 import RefreshButton from '../_common/RefreshButton';
+import PrevNext from '../_common/PrevNext';
+import RowsPerPage from '../_common/RowsPerPage';
 
 import CommentsTable from '../_tables/CommentsTable';
 
@@ -58,6 +60,8 @@ export default class CommentsDisplay extends PureComponent {
     return (
       <React.Fragment>
         <div className="table-toolbar">
+          <PrevNext />
+          <RowsPerPage />
           <RefreshButton onClick={this.onClickFetch} />
           <DownloadAs
             data={rows}

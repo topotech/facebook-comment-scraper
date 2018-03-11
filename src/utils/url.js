@@ -44,3 +44,14 @@ export const queryStringToObject = (search, smartParsing = true) => {
   }
   return queryString.length ? queryString.split('&').map(mapPairs.bind({}))[0] : {};
 };
+
+export const mergeSearchWithDefaults = (search = '?', defaultParams) => {
+  const searchParams = queryStringToObject(search);
+
+  const mergedParams = {
+    ...defaultParams,
+    ...searchParams,
+  };
+
+  return objectToQueryString(mergedParams);
+};
