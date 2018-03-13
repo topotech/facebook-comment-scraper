@@ -31,8 +31,8 @@ export default createFetchAction({
     COMMENTS_FAILURE,
   ],
   url: (state, args) => {
-    const { postId, ...otherArgs } = args;
-    return `${config.apiUrl}${postId}/comments/?${objectToQueryString({
+    const { itemId, ...otherArgs } = args;
+    return `${config.apiUrl}${itemId}/comments/?${objectToQueryString({
       fields,
       ...defaultParams,
       ...toFacebookFormat(otherArgs),

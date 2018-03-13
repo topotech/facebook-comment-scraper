@@ -15,8 +15,8 @@ export default createFetchReducer({
     COMMENTS_FAILURE,
   ],
   key: (state, action) => {
-    const { postId, ...otherOptions } = action.options;
-    return [postId, objectToQueryString({ limit: 100, offset: 0, ...otherOptions })];
+    const { itemId, ...otherOptions } = action.options;
+    return [itemId, objectToQueryString({ limit: 100, offset: 0, ...otherOptions })];
   },
   Record: Comment,
 });
