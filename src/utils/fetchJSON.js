@@ -5,7 +5,12 @@ export default (url, options) =>
     )
     .then(({ response, json }) => {
       if (!response.ok) {
-        return Promise.reject(Error(json));
+        const error = (
+          (json.error && json.error.message) ?
+            new Error(json.error.message) :
+            new Error('Unknown error')
+        );
+        return Promise.reject(error);
       }
       const data = json.data || json;
       return Promise.resolve({ response, data });
