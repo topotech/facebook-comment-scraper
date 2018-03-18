@@ -42,9 +42,9 @@ export default ({
       const recordIds = [];
 
       rows.forEach((row) => {
-        const record = Record ? new Record(row) : row;
-        records = records.set(record.id, record);
-        recordIds.push(record.id);
+        const record = Record ? new Record(row) : new Map(row);
+        records = records.set(record.get('id'), record);
+        recordIds.push(record.get('id'));
       });
 
       return state
