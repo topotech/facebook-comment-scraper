@@ -1,4 +1,12 @@
-export const makeGetRequest = stateKey => (state, requestKey) => state[stateKey].getIn(['requests', ...[].concat(requestKey)]);
+export const makeGetRequest = stateKey => (state, requestKey) => {
+  const statePiece = state[stateKey];
+
+  if (!statePiece) {
+    throw new Error('Missing Redux state.');
+  }
+
+  return statePiece.getIn(['requests', ...[].concat(requestKey)]);
+};
 
 export const makeGetRows = stateKey => (state, requestKey) => {
   const statePiece = state[stateKey];
